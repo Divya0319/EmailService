@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fastturtle.emailservice.dtos.EmailDTO;
 import com.fastturtle.emailservice.utils.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import java.util.Properties;
@@ -15,6 +16,9 @@ import javax.mail.Session;
 
 @Service
 public class SendEmailConsumer {
+
+    @Value("${appPassword}")
+    private String appPassword;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -35,7 +39,7 @@ public class SendEmailConsumer {
             Authenticator auth = new Authenticator() {
                 //override the getPasswordAuthentication method
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(emailDTO.getFrom(), "faxjprztzgeexztq");
+                    return new PasswordAuthentication(emailDTO.getFrom(), appPassword);
                 }
             };
             Session session = Session.getInstance(props, auth);
