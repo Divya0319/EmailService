@@ -41,7 +41,7 @@ public class EmailUtil {
 
             msg.setSubject(subject, "UTF-8");
 
-            msg.setText(body, "UTF-8");
+            msg.setContent(body, "text/HTML; charset=UTF-8");
 
             msg.setSentDate(new Date());
 
